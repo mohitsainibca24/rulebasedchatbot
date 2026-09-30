@@ -7,9 +7,3 @@ services:
     envVars:
       - key: HOST
         value: 0.0.0.0
-      - key: CHATBOT_CONFIG_PATH
-        value: /var/data/chatbot_config.json
-    disk:
-      name: chatbot-data
-      mountPath: /var/data
-      sizeGB: 1
