@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohit ChatBot · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css?v=2">
+</head>
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="eyebrow">MOHIT / CONTROL ROOM</p>
+        <h1>Response admin</h1>
+        <p class="lead">Shape what your chatbot says. Changes are saved to the local Python configuration.</p>
+      </div>
+      <a class="back-link" href="/">Back to chat <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="settings-grid">
+      <div class="section-heading">
+        <p class="eyebrow">01 / KEYWORD RULES</p>
+        <h2>When the user says something like this...</h2>
+        <p>Rules are checked from top to bottom. Put more specific keywords first.</p>
+      </div>
+      <div class="rules-panel">
+        <div class="bulk-editor">
+          <label for="bulkData">Response data</label>
+          <textarea id="bulkData" rows="5" spellcheck="false" placeholder='{
+  "hello": "Hi, welcome. How can I help you?",
+  "how are you": "I am very fine. Thank you"
+}'></textarea>
+          <button class="import-button" id="importData" type="button">Use response data <span aria-hidden="true">↓</span></button>
+        </div>
+        <div id="rulesList" class="rules-list" aria-live="polite"></div>
+        <button class="add-rule" id="addRule" type="button"><span>+</span> Add response rule</button>
+      </div>
+    </section>
+
+    <section class="settings-grid message-settings">
+      <div class="section-heading">
+        <p class="eyebrow">02 / BOT BEHAVIOR</p>
+        <h2>Keep the conversation moving.</h2>
+        <p>These messages handle anything outside your keyword rules and the end of a chat.</p>
+      </div>
+      <div class="behavior-panel">
+        <label>Fallback response <textarea id="fallback" rows="3"></textarea></label>
+        <label>Goodbye response <textarea id="goodbye" rows="2"></textarea></label>
+      </div>
+    </section>
+
+    <footer class="admin-footer">
+      <span id="saveStatus" role="status">Ready to edit</span>
+      <button class="save-button" id="saveConfig" type="button">Save changes <span aria-hidden="true">→</span></button>
+    </footer>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>

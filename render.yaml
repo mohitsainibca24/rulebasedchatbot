@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: mohit-chatbot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python chatbot.py
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: CHATBOT_CONFIG_PATH
+        value: /var/data/chatbot_config.json
+    disk:
+      name: chatbot-data
+      mountPath: /var/data
+      sizeGB: 1

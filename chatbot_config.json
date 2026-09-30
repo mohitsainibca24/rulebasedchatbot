@@ -1,0 +1,12 @@
+{
+  "responses": {
+    "how are you": "I am very fine. Thank you45 ki nhi yrr hoi",
+    "who are you": "I am smart AI chatbot",
+    "motivate me": "Keep going. Every bug of your project makes you a better developer",
+    "functions kya hote hai": "jakar chapter 7 padho",
+    "hello": "Hi, welcome. How can I help aree you?",
+    "happy": "Great to hear that"
+  },
+  "fallback": "I am not able to tell that yet. Mai jald hi ye sikh lunga",
+  "goodbye": "Goodbye! Have a nice day."
+}

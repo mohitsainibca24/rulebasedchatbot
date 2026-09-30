@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mohit ChatBot, a simple rule-based assistant.">
+  <title>Mohit ChatBot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="Chatbot information">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="eyebrow">MOHIT / 01</p>
+      <h1>A small bot with a big curiosity.</h1>
+      <p class="intro">Ask a simple question and see the rules light up. No cloud, no account, just a friendly local conversation.</p>
+      <div class="bot-stage" aria-label="Animated 3D illustration of Mohit the chatbot" role="img">
+        <div class="bot-glow"></div>
+        <div class="bot-shadow"></div>
+        <div class="bot-figure">
+          <div class="antenna"><span></span></div>
+          <div class="bot-head">
+            <div class="ear ear-left"></div>
+            <div class="ear ear-right"></div>
+            <div class="face-panel">
+              <span class="eye eye-left"></span>
+              <span class="eye eye-right"></span>
+              <span class="bot-smile"></span>
+            </div>
+          </div>
+          <div class="bot-neck"></div>
+          <div class="bot-body">
+            <div class="body-panel"><span></span><span></span><span></span></div>
+            <div class="arm arm-left"></div>
+            <div class="arm arm-right"></div>
+          </div>
+        </div>
+      </div>
+      <div class="status"><span class="status-dot"></span><span>System online</span></div>
+      <div class="sidebar-footer">
+        <span>RULE-BASED AI</span>
+        <span>LOCAL MODE</span>
+      </div>
+    </aside>
+
+    <section class="chat-panel" aria-label="Chat with Mohit">
+      <header class="chat-header">
+        <div>
+          <p class="eyebrow">YOUR CONVERSATION</p>
+          <h2>Mohit ChatBot</h2>
+        </div>
+        <div class="header-actions">
+          <a class="admin-link" href="/admin.html">Admin panel <span aria-hidden="true">↗</span></a>
+          <button class="clear-button" id="clearChat" type="button" title="Clear conversation">Clear <span aria-hidden="true">↗</span></button>
+        </div>
+      </header>
+
+      <div class="messages" id="messages" aria-live="polite" aria-label="Conversation">
+        <article class="message bot-message">
+          <div class="avatar">M</div>
+          <div class="message-content">
+            <span class="message-label">MOHIT · NOW</span>
+            <p>Hi, welcome. How can I help you?</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="suggestions" aria-label="Suggested questions">
+        <button type="button" data-prompt="Hello">Hello</button>
+        <button type="button" data-prompt="Who are you?">Who are you?</button>
+        <button type="button" data-prompt="Motivate me">Motivate me</button>
+        <button type="button" data-prompt="How are you?">How are you?</button>
+      </div>
+
+      <form class="composer" id="chatForm">
+        <label class="sr-only" for="userInput">Your message</label>
+        <input id="userInput" name="message" type="text" autocomplete="off" placeholder="Type your message..." maxlength="240">
+        <button class="send-button" type="submit" aria-label="Send message" title="Send message">Send <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="hint">Press Enter to send <span>·</span> Type “bye” to end the conversation</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
