@@ -16,7 +16,15 @@ function addMessage(text, sender) {
     </div>`;
   message.querySelector("p").textContent = text;
   messages.append(message);
-  messages.scrollTop = messages.scrollHeight;
+  if (window.matchMedia("(max-width: 700px)").matches) {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+    });
+  } else if (messages.scrollHeight > messages.clientHeight) {
+    messages.scrollTo({ top: messages.scrollHeight, behavior: "smooth" });
+  } else {
+    message.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 }
 
 async function sendMessage(text) {
@@ -67,5 +75,6 @@ clearButton.addEventListener("click", () => {
     </article>`;
   input.disabled = false;
   form.querySelector("button").disabled = false;
+  window.scrollTo({ top: 0, behavior: "smooth" });
   input.focus();
 });
