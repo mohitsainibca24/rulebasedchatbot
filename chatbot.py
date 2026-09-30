@@ -5,8 +5,8 @@ from pathlib import Path
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 CONFIG_PATH = Path(os.environ.get("CHATBOT_CONFIG_PATH", Path(__file__).with_name("chatbot_config.json")))
-ADMIN_USERNAME = "mohitbot"
-ADMIN_PASSWORD = "saini"
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "mohitbot")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "saini")
 admin_sessions = set()
 DEFAULT_CONFIG = {
     "responses": {
@@ -23,10 +23,14 @@ DEFAULT_CONFIG = {
 
 
 def load_config():
-    if not CONFIG_PATH.exists():
-        save_config(DEFAULT_CONFIG)
-    with CONFIG_PATH.open("r", encoding="utf-8") as config_file:
-        return json.load(config_file)
+    try:
+        with CONFIG_PATH.open("r", encoding="utf-8") as config_file:
+            loaded_config = json.load(config_file)
+        if not isinstance(loaded_config, dict) or not isinstance(loaded_config.get("responses"), dict):
+            raise ValueError("config must contain a responses object")
+        return loaded_config
+    except (OSError, json.JSONDecodeError, ValueError):
+        return DEFAULT_CONFIG.copy()
 
 
 def save_config(config):
@@ -54,8 +58,15 @@ class ChatbotRequestHandler(SimpleHTTPRequestHandler):
             self.send_error(404)
             return
 
-        content_length = int(self.headers.get("Content-Length", 0))
-        request_data = json.loads(self.rfile.read(content_length))
+        try:
+            content_length = int(self.headers.get("Content-Length", 0))
+            request_data = json.loads(self.rfile.read(content_length))
+        except (ValueError, json.JSONDecodeError):
+            self.send_json({"error": "Request body must be valid JSON"}, 400)
+            return
+        if not isinstance(request_data, dict):
+            self.send_json({"error": "Request body must be a JSON object"}, 400)
+            return
 
         if self.path == "/api/login":
             if request_data.get("username") == ADMIN_USERNAME and request_data.get("password") == ADMIN_PASSWORD:
@@ -89,7 +100,11 @@ class ChatbotRequestHandler(SimpleHTTPRequestHandler):
                 "fallback": str(new_config.get("fallback", DEFAULT_CONFIG["fallback"])).strip(),
                 "goodbye": str(new_config.get("goodbye", DEFAULT_CONFIG["goodbye"])).strip()
             }
-            save_config(config)
+            try:
+                save_config(config)
+            except OSError:
+                self.send_json({"error": "Configuration storage is unavailable"}, 500)
+                return
             self.send_json(config)
             return
 
@@ -136,7 +151,7 @@ class ChatbotRequestHandler(SimpleHTTPRequestHandler):
 
 
 def run_server():
-    host = os.environ.get("HOST", "127.0.0.1")
+    host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", "8000"))
     server = ThreadingHTTPServer((host, port), ChatbotRequestHandler)
     print(f"Mohit ChatBot running on {host}:{port}")
